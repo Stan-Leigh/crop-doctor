@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Doctor — Premium AI Plant Diagnostics</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="logo-glow"></div>
+                <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 22C2 22 6 18 12 18C18 18 22 22 22 22M12 2V18M12 2C8 6 3 9 3 14C3 17.5 5.5 18 5.5 18M12 2C16 6 21 9 21 14C21 17.5 18.5 18 18.5 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1>CROP <span>DOCTOR</span></h1>
+            </div>
+            <div class="session-info">
+                <span class="status-badge"><span class="pulse-dot"></span> Active</span>
+                <span id="session-display">Session: ...</span>
+                <button id="reset-session" title="Reset Session">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="app-body">
+            <!-- Left Side: Chat Panel -->
+            <section class="chat-panel">
+                <div class="chat-history" id="chat-history">
+                    <div class="message system">
+                        <div class="avatar">👨‍⚕️</div>
+                        <div class="bubble">
+                            <p>Welcome to Crop Doctor! Describe your plant symptoms, soil pH, moisture, or location (e.g., SF) to start a diagnosis.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- HITL Overlay or Prompt Injection Alert -->
+                <div class="hitl-container hidden" id="hitl-container">
+                    <div class="hitl-card">
+                        <div class="hitl-header">
+                            <span class="warning-icon">✋</span>
+                            <h3>Expert Review Required</h3>
+                        </div>
+                        <p id="hitl-prompt">Proposed Diagnosis: ...</p>
+                        <div class="hitl-actions">
+                            <button class="btn btn-approve" id="hitl-approve">Approve (Yes)</button>
+                            <div class="hitl-correction-input">
+                                <input type="text" id="hitl-correction-text" placeholder="Provide corrections instead...">
+                                <button class="btn btn-submit" id="hitl-submit-correction">Correct</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <textarea id="user-input" placeholder="Type crop details (e.g., tomato yellow leaves in SF)..." rows="1"></textarea>
+                    <button id="send-btn" class="send-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Side: Monitor Panel -->
+            <section class="monitor-panel">
+                <!-- Node Monitor -->
+                <div class="monitor-card">
+                    <h2>Workflow Nodes</h2>
+                    <div class="node-list">
+                        <div class="node-item" id="node-security">
+                            <div class="node-indicator"></div>
+                            <div class="node-info">
+                                <h3>Security Checkpoint</h3>
+                                <p>PII & substance checks</p>
+                            </div>
+                        </div>
+                        <div class="node-item" id="node-diagnose">
+                            <div class="node-indicator"></div>
+                            <div class="node-info">
+                                <h3>Diagnose Node</h3>
+                                <p>Orchestrator → Diagnostician</p>
+                            </div>
+                        </div>
+                        <div class="node-item" id="node-hitl">
+                            <div class="node-indicator"></div>
+                            <div class="node-info">
+                                <h3>Expert Review</h3>
+                                <p>Human-in-the-loop gate</p>
+                            </div>
+                        </div>
+                        <div class="node-item" id="node-treatment">
+                            <div class="node-indicator"></div>
+                            <div class="node-info">
+                                <h3>Treatment Node</h3>
+                                <p>Orchestrator → Treatment Specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State Monitor -->
+                <div class="monitor-card">
+                    <h2>Session State</h2>
+                    <div class="state-container">
+                        <div class="state-item">
+                            <span class="state-label">Diagnosis</span>
+                            <div class="state-value" id="state-diagnosis">None</div>
+                        </div>
+                        <div class="state-item">
+                            <span class="state-label">Corrections</span>
+                            <div class="state-value" id="state-corrections">None</div>
+                        </div>
+                        <div class="state-item">
+                            <span class="state-label">Treatment</span>
+                            <div class="state-value" id="state-treatment">None</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCP Tools Log -->
+                <div class="monitor-card">
+                    <h2>MCP Tool Log</h2>
+                    <div class="mcp-log" id="mcp-log">
+                        <div class="log-entry system">MCP client ready. Stdio connection open.</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
