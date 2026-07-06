@@ -1,4 +1,4 @@
-# crop-doctor
+# Crop Doctor
 
 Diagnoses plant health issues using leaf/soil metrics and weather patterns, then recommends organic treatments.
 
@@ -121,3 +121,5 @@ graph TD
 ### Agent Workflow Diagram
 ![Crop Doctor Workflow Diagram](assets/architecture_diagram.png)
 
+## Video demo
+[![Watch the video](assets/frontend_page.png)](https://youtu.be/iuwspe-Xw_Y)
